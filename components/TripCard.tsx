@@ -1,13 +1,17 @@
 
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-
+import { format, parseISO } from "date-fns";
+import { fr } from "date-fns/locale";
+import { Image, Pressable, StyleSheet, Text, View, } from "react-native";
 export default function TripCard({ trip }: { trip: any }) {
+  
+  const departure = parseISO(trip.date + "T" + trip.time);
+
+  const dateLabel = format(
+    departure,
+    "EEEE d MMMM 'à' HH'h'mm",
+    { locale: fr }
+  );
+
   return (
     <Pressable
       onPress={() =>
@@ -32,8 +36,9 @@ export default function TripCard({ trip }: { trip: any }) {
       </View>
 
       <Text style={styles.info}>
-        {trip.date} à {trip.time}
+        {dateLabel}
       </Text>
+
 
       <Text style={styles.info}>
         {trip.seatsAvailable} places disponibles
